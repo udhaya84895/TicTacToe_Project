@@ -12,10 +12,12 @@ import ticTacToe.winningstrategies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws DuplicateSymbolException, PlayerCountMisMatchException, MoreThanOneBotException {
         GameController gameController = new GameController();
+        Scanner scanner = new Scanner(System.in);
 
         int dimension = 3;
         List<Player> playerList = new ArrayList<>();
@@ -31,7 +33,20 @@ public class App {
         Game game = gameController.startGame(dimension, playerList, winningStrategies);
 
         while(game.getGamestate().equals(GameState.INPROGRESS)){
+            /*
+            * print the board
+            * check whether we need to make undo
+            * then make next move
+            */
+
             game.printBoard();
+            System.out.println("Does you want to undo the move ? reply (y/n)");
+
+            String undo = scanner.next();
+            if(undo.equalsIgnoreCase("y")){
+                gameController.undo(game);
+                continue;
+            }
             gameController.makeMove(game);
         }
         //If I'm here, it means game is not in progress

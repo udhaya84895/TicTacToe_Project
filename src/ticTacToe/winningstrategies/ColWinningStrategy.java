@@ -35,5 +35,14 @@ public class ColWinningStrategy implements WinningStrategy{
         }
         return false;
     }
+
+    @Override
+    public void undo(Board board, Move lastMove) {
+        int col = lastMove.getCell().getCol();
+        char symbol = lastMove.getPlayer().getSymbol();
+
+        Map<Character, Integer> colMap = map.get(col);
+        colMap.put(symbol, colMap.get(symbol)-1);
+    }
 }
 
